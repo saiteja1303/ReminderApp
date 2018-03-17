@@ -27,7 +27,7 @@ class App extends Component {
         const { reminders } = this.props;
         return (
 
-            <ul className="list-group col-sm-4">
+            <ul className="list-group col-ls-4">
 
                 {
                     reminders.map(reminder => {
@@ -69,12 +69,14 @@ class App extends Component {
                             onChange={event => this.setState({ dueDate: event.target.value })}
                         />
                     </div>
-                        <button className="btn btn-success"
-                            type="button"
-                             onClick={() => this.addReminder()}>
-                            Add Reminder
+                    <button className="btn btn-success"
+                        type="button"
+                        onClick={() => this.addReminder()}>
+                        Add Reminder
                         </button>
-                    {this.renderReminder()}
+                    <div className="">
+                        {this.renderReminder()}
+                    </div>
                 </div>
                 <button className="btn btn-danger"
                     onClick={() => this.removeReminders()}
