@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { addReminder, deleteReminder } from './actions/index';
-
+import moment from 'moment';
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             text: '',
+            dueDate: ''
 
         }
     }
     addReminder() {
-        this.props.addReminder(this.state.text);
+        this.props.addReminder(this.state.text, this.state.dueDate);
     }
 
     deleteReminder(id) {
-        this.props.deleteReminder(this.state.id);
+        this.props.deleteReminder(id);
     }
 
     renderReminder() {
@@ -30,9 +31,12 @@ class App extends Component {
                             <li key={reminder.id}
                                 className="list-group-item "
                             >
-                                <div className="list-item"> {reminder.text} </div>
+                                <div className="list-item">
+                                    <div> {reminder.text}</div>
+                                    <div> {moment(new Date(reminder.dueDate)).fromNow()}</div>
+                                </div>
                                 <div className="list-item delete-button"
-                                        
+
                                     onClick={() => this.deleteReminder(reminder.id)}
                                 >
                                     &#x2715;
@@ -57,7 +61,11 @@ class App extends Component {
                             placeholder="Things to do..."
                             onChange={event => this.setState({ text: event.target.value })}
                         />
+                        <input type="datetime-local" className="form-control"
+                            onChange={event => this.setState({ dueDate: event.target.value })}
+                        />
                     </div>
+
                     <button className="btn btn-success"
                         type="button"
                         onClick={() => this.addReminder()}
