@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { addReminder, deleteReminder } from './actions/index';
+import { addReminder, deleteReminder, deleteAllReminders } from './actions/index';
 import moment from 'moment';
 class App extends Component {
     constructor(props) {
@@ -8,15 +8,19 @@ class App extends Component {
         this.state = {
             text: '',
             dueDate: ''
-
         }
     }
+
     addReminder() {
         this.props.addReminder(this.state.text, this.state.dueDate);
     }
 
     deleteReminder(id) {
         this.props.deleteReminder(id);
+    }
+
+    removeReminders() {
+        this.props.deleteAllReminders();
     }
 
     renderReminder() {
@@ -61,19 +65,22 @@ class App extends Component {
                             placeholder="Things to do..."
                             onChange={event => this.setState({ text: event.target.value })}
                         />
-                        <input type="datetime-local" className="form-control"
+                        <input type="date" className="form-control"
                             onChange={event => this.setState({ dueDate: event.target.value })}
                         />
                     </div>
-
-                    <button className="btn btn-success"
-                        type="button"
-                        onClick={() => this.addReminder()}
-                    >
-                        Add Reminder
-                    </button>
+                        <button className="btn btn-success"
+                            type="button"
+                             onClick={() => this.addReminder()}>
+                            Add Reminder
+                        </button>
                     {this.renderReminder()}
                 </div>
+                <button className="btn btn-danger"
+                    onClick={() => this.removeReminders()}
+                >
+                    Clear Reminders
+                 </button>
             </div>
         );
     }
@@ -85,4 +92,6 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { addReminder, deleteReminder })(App);
+
+
+export default connect(mapStateToProps, { addReminder, deleteReminder, deleteAllReminders })(App);
