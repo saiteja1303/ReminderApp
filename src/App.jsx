@@ -11,9 +11,9 @@ class App extends Component {
         }
     }
 
-    addReminder() {
-        this.props.addReminder(this.state.text, this.state.dueDate);
-    }
+    // addReminder() {
+    //     this.props.addReminder(this.state.text, this.state.dueDate);
+    // }
 
     deleteReminder(id) {
         this.props.deleteReminder(id);
@@ -21,6 +21,18 @@ class App extends Component {
 
     removeReminders() {
         this.props.deleteAllReminders();
+    }
+
+    clearReminder() {
+        if(this.props.reminders.length>0) {
+            return (
+                <button className="btn btn-danger"
+                onClick={() => this.removeReminders()}
+                >
+                Clear Reminders
+                 </button>
+        )
+    }
     }
 
     renderReminder() {
@@ -54,6 +66,7 @@ class App extends Component {
     }
 
     render() {
+        console.log(this.props.reminders)
         return (
             <div className="App">
                 <div className="title">
@@ -71,18 +84,14 @@ class App extends Component {
                     </div>
                     <button className="btn btn-success"
                         type="button"
-                        onClick={() => this.addReminder()}>
+                        onClick={() => this.props.addReminder(this.state.text, this.state.dueDate)}>
                         Add Reminder
                         </button>
                     <div className="">
                         {this.renderReminder()}
                     </div>
                 </div>
-                <button className="btn btn-danger"
-                    onClick={() => this.removeReminders()}
-                >
-                    Clear Reminders
-                 </button>
+                {this.clearReminder()}
             </div>
         );
     }
